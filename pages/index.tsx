@@ -1,11 +1,12 @@
+import FMLayout from "@/components/base/FMLayout";
 import React from "react";
 import styled from "styled-components";
 
 export default function Home() {
   return (
-    <React.Fragment>
+    <FMLayout header bottomNavigation headerRightIcon>
       <Container></Container>
-    </React.Fragment>
+    </FMLayout>
   );
 }
 
