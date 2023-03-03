@@ -12,7 +12,9 @@ function Header({ headerRightIcon }: IProps) {
     <Container>
       <ContentContainer>
         <TextContainer>
-          <FMText body01>{"FM TODO"}</FMText>
+          <FMText body01 color={"#E10078"}>
+            {"FM TODO"}
+          </FMText>
         </TextContainer>
         <IconContainer>
           {headerRightIcon && <Icons.SvgElement.searchIcon />}
@@ -28,7 +30,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.colors.gray};
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray10};
 `;
 
 const ContentContainer = styled.div`

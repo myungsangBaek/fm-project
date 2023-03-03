@@ -2,13 +2,15 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { FMText } from "@/components/base";
 import { Icons } from "@/public/icons";
+import { useRouter } from "next/router";
 
 function BottomNavigation() {
+  const router = useRouter();
+
   return (
     <Container>
-      <NavigationButton>
+      <NavigationButton onClick={() => router.push("/write")}>
         <Icons.SvgElement.addIcon />
       </NavigationButton>
     </Container>
