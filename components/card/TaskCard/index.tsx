@@ -49,7 +49,9 @@ const ContentContainer = styled.div`
 
 const CheckContainer = styled.div`
   width: 24px;
-  margin: auto;
+  height: 24px;
+  margin: auto 0;
+  cursor: pointer;
 `;
 
 const TextContainer = styled.div`
@@ -62,7 +64,9 @@ const TextContainer = styled.div`
 
 const IconContainer = styled.div`
   width: 24px;
+  height: 24px;
   margin-top: 20px;
+  cursor: pointer;
 `;
 const ChipContainer = styled.div`
   border-top: 1px solid ${(props) => props.theme.colors.gray10};
