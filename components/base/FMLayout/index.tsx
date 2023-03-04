@@ -9,6 +9,7 @@ interface IProps {
   header?: boolean;
   bottomNavigation?: boolean;
   headerRightIcon?: boolean;
+  headerLeftIcon?: boolean;
 }
 
 function FMLayout({
@@ -16,6 +17,7 @@ function FMLayout({
   header,
   bottomNavigation,
   headerRightIcon,
+  headerLeftIcon,
 }: IProps): React.ReactElement {
   React.useEffect(() => {
     function resizeHeightForIOS() {
@@ -33,7 +35,12 @@ function FMLayout({
 
   return (
     <Container>
-      {header && <Header headerRightIcon={headerRightIcon} />}
+      {header && (
+        <Header
+          headerRightIcon={headerRightIcon}
+          headerLeftIcon={headerLeftIcon}
+        />
+      )}
       <ContentContainer>{children}</ContentContainer>
       {bottomNavigation && (
         <BottomNavigationContainer>

@@ -35,7 +35,7 @@ function NewTodoPage(): React.ReactElement {
       <Head>
         <title>{"Add TODO"}</title>
       </Head>
-      <FMLayout header>
+      <FMLayout header headerLeftIcon>
         <Container>
           {inputCardList.map((item, idx) => {
             return (

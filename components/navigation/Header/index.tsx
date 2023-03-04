@@ -2,15 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { Icons } from "@/public/icons";
 import { FMText } from "@/components/base";
+import { useRouter } from "next/router";
 
 export interface IProps {
+  headerLeftIcon?: boolean;
   headerRightIcon?: boolean;
 }
 
-function Header({ headerRightIcon }: IProps) {
+function Header({ headerRightIcon, headerLeftIcon }: IProps) {
+  const router = useRouter();
   return (
     <Container>
       <ContentContainer>
+        <IconContainer onClick={() => router.back()}>
+          {headerLeftIcon && <Icons.SvgElement.closeIcon />}
+        </IconContainer>
         <TextContainer>
           <FMText body01 color={"#E10078"}>
             {"FM TODO"}
