@@ -1,11 +1,12 @@
 import FMLayout from "@/components/base/FMLayout";
+import TaskCard from "@/components/card/TaskCard";
 import React from "react";
 import styled from "styled-components";
 
 export default function Home() {
   return (
     <FMLayout header bottomNavigation headerRightIcon>
-      <Container></Container>
+      <TaskCard />
     </FMLayout>
   );
 }
