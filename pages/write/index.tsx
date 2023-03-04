@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
 import styled, { useTheme } from "styled-components";
 
 import { FMLayout, FMText } from "@/components/base";
-import WriteFeedInputCard from "@/components/card/WriteFeedInputCard";
+import WriteFeedInputCard from "@/components/card/WriteInputCard";
+import { useRouter } from "next/router";
 
 function NewTodoPage(): React.ReactElement {
+  const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [todoList, setTodoList] = useState<string[]>([]);
 
   const theme = useTheme();
 
   const inputCardList = [
     {
-      label: "Title",
+      label: "Title*",
       placeholder: "제목을 작성해주세요.(최대 10글자)",
       limitLength: 10,
       limitRow: 1,
@@ -22,13 +25,43 @@ function NewTodoPage(): React.ReactElement {
       onChangeValue: (value: string) => setTitle(value),
     },
     {
-      label: "TODO",
+      label: "TODO*",
       placeholder: "내용을 작성해주세요.(최대 20글자)",
       value: content,
       limitLength: 20,
       onChangeValue: (value: string) => setContent(value),
     },
   ];
+
+  const addTodo = () => {
+    localStorage.setItem(
+      "todoList",
+      JSON.stringify([
+        ...todoList,
+        { id: Date.now(), title: title, content: content },
+      ])
+    );
+    setTitle("");
+    setContent("");
+    router.push("/");
+  };
+
+  const onSubmitHandler = () => {
+    if (!title) {
+      alert("제목을 입력해주세요.");
+    } else if (!content) {
+      alert("내용을 입력해주세요.");
+    } else {
+      addTodo();
+    }
+  };
+
+  useEffect(() => {
+    const savedTodoList = localStorage.getItem("todoList");
+    if (savedTodoList) {
+      setTodoList(JSON.parse(savedTodoList));
+    }
+  }, []);
 
   return (
     <PageContainer>
@@ -52,7 +85,7 @@ function NewTodoPage(): React.ReactElement {
           })}
         </Container>
       </FMLayout>
-      <SubmitButton>
+      <SubmitButton onClick={onSubmitHandler}>
         <FMText color={theme.colors.white}>{"작성하기"}</FMText>
       </SubmitButton>
     </PageContainer>
