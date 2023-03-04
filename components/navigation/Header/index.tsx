@@ -17,11 +17,9 @@ function Header({ headerRightIcon, headerLeftIcon }: IProps) {
         <IconContainer onClick={() => router.back()}>
           {headerLeftIcon && <Icons.SvgElement.closeIcon />}
         </IconContainer>
-        <TextContainer>
-          <FMText body01 color={"#E10078"}>
-            {"FM TODO"}
-          </FMText>
-        </TextContainer>
+        <FMText body01 color={"#E10078"}>
+          {"FM TODO"}
+        </FMText>
         <IconContainer>
           {headerRightIcon && <Icons.SvgElement.searchIcon />}
         </IconContainer>
@@ -55,12 +53,6 @@ const IconContainer = styled.div`
   width: 24px;
   height: 24px;
   cursor: pointer;
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
 `;
 
 export default React.memo(Header);

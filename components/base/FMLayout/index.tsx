@@ -1,8 +1,10 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 import Header from "@/components/navigation/Header";
 import BottomNavigation from "@/components/navigation/BottomNavigation";
+import { MONTH_CONFIG } from "@/config";
+import FMText from "../FMText";
 
 interface IProps {
   children: React.ReactNode;
@@ -19,6 +21,13 @@ function FMLayout({
   headerRightIcon,
   headerLeftIcon,
 }: IProps): React.ReactElement {
+  const theme = useTheme();
+  const day = new Date();
+
+  const today = `${
+    MONTH_CONFIG[day.getMonth() + 1]
+  } ${day.getDay()}, ${day.getFullYear()}`;
+
   React.useEffect(() => {
     function resizeHeightForIOS() {
       const vh = window.innerHeight * 0.01;
@@ -41,6 +50,9 @@ function FMLayout({
           headerLeftIcon={headerLeftIcon}
         />
       )}
+      <RealTimeContainer>
+        <FMText color={theme.colors.gray30}>{today}</FMText>
+      </RealTimeContainer>
       <ContentContainer>{children}</ContentContainer>
       {bottomNavigation && (
         <BottomNavigationContainer>
@@ -84,4 +96,10 @@ const BottomNavigationContainer = styled.div`
   width: 100%;
   align-items: center;
   border-top: 1px solid ${(props) => props.theme.colors.gray10};
+`;
+
+const RealTimeContainer = styled.div`
+  display: flex;
+  height: 20px;
+  padding: 12px 0;
 `;
