@@ -8,33 +8,23 @@ import TaskCard from "@/components/card/TaskCard";
 
 import { taskState } from "@/config/store";
 import { ITodo } from "@/types";
-import { Autocomplete, TextField } from "@mui/material";
 
-import { makeStyles } from "@mui/styles";
-
-const useStyles = makeStyles({
-  focused: {
-    color: "purple",
-    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#E10078",
-    },
-    "&.Mui-focused .MuiInputLabel-outlined": {
-      color: "#E10078",
-    },
-  },
-});
+import FMSearch from "@/components/base/FMSearch";
 
 export default function Home() {
   const [taskList, setTaskList] = useRecoilState(taskState);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
-  const [isSearch, setIsSearch] = useState<boolean>(false);
-
-  const onDeleteHandler = (id: number) => {
+  const handleDelete = (id: number) => {
     setTaskList(taskList.filter((item) => item.id !== id));
+    if (taskList.length === 1) {
+      console.log("4");
+      localStorage.setItem("taskList", "");
+    }
   };
 
-  const onCheckHandler = (id: number) => {
+  const handleCheck = (id: number) => {
     const newTaskList = taskList.map((item) => {
       if (item.id === id) {
         return {
@@ -48,9 +38,8 @@ export default function Home() {
     setTaskList(newTaskList);
   };
 
-  const openSearchBoxHandler = () => {
-    setIsSearch(!isSearch);
-
+  const toggleSearchBox = () => {
+    setIsSearchOpen(!isSearchOpen);
     setSearchTerm("");
   };
 
@@ -62,7 +51,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("taskList", JSON.stringify(taskList));
+    if (taskList.length > 0) {
+      localStorage.setItem("taskList", JSON.stringify(taskList));
+    }
   }, [taskList]);
 
   const renderTodoList = () => {
@@ -74,16 +65,16 @@ export default function Home() {
         : taskList;
     return data.length > 0 ? (
       <TodoListContainer>
-        {data.map((item: ITodo) => (
+        {data.map((item: ITodo, i: number) => (
           <TaskCard
             id={item.id}
-            key={item.id}
+            key={i}
             title={item.title}
             content={item.content}
             checked={item.checked}
             chipList={item.chipList}
-            onDeleteHandler={onDeleteHandler}
-            onCheckHandler={onCheckHandler}
+            onDeleteHandler={handleDelete}
+            onCheckHandler={handleCheck}
           />
         ))}
       </TodoListContainer>
@@ -92,28 +83,16 @@ export default function Home() {
     );
   };
 
-  const classes = useStyles();
-
   return (
     <React.Fragment>
       <FMLayout
         header
         bottomNavigation
         headerRightIcon
-        openSearchBoxHandler={openSearchBoxHandler}
+        toggleSearchBox={toggleSearchBox}
       >
-        {isSearch && (
-          <SearchContainer>
-            <Autocomplete
-              onChange={(_, value) => setSearchTerm(value || "")}
-              options={taskList.map((option) => option.title)}
-              freeSolo
-              renderInput={(params) => (
-                <TextField {...params} label="Input Title"></TextField>
-              )}
-              classes={classes}
-            />
-          </SearchContainer>
+        {isSearchOpen && (
+          <FMSearch taskList={taskList} setSearchTerm={setSearchTerm} />
         )}
         {renderTodoList()}
       </FMLayout>
@@ -125,9 +104,4 @@ const TodoListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-`;
-
-const SearchContainer = styled.div`
-  margin: 20px 0;
-  padding: 0 20px;
 `;

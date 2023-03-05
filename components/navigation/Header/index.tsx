@@ -7,14 +7,10 @@ import { useRouter } from "next/router";
 export interface IProps {
   headerLeftIcon?: boolean;
   headerRightIcon?: boolean;
-  openSearchBoxHandler?: () => void;
+  toggleSearchBox?: () => void;
 }
 
-function Header({
-  headerRightIcon,
-  headerLeftIcon,
-  openSearchBoxHandler,
-}: IProps) {
+function Header({ headerRightIcon, headerLeftIcon, toggleSearchBox }: IProps) {
   const router = useRouter();
   return (
     <Container>
@@ -25,7 +21,7 @@ function Header({
         <FMText body01 color={"#E10078"}>
           {"FM TODO"}
         </FMText>
-        <IconContainer onClick={openSearchBoxHandler}>
+        <IconContainer onClick={toggleSearchBox}>
           {headerRightIcon && <Icons.SvgElement.searchIcon />}
         </IconContainer>
       </ContentContainer>

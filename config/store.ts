@@ -2,7 +2,7 @@ import { ITodo } from "@/types";
 import { atom } from "recoil";
 
 const taskState = atom<ITodo[]>({
-  key: "task",
+  key: "taskKey",
   default: [],
 });
 

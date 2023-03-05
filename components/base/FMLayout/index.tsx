@@ -12,7 +12,7 @@ interface IProps {
   bottomNavigation?: boolean;
   headerRightIcon?: boolean;
   headerLeftIcon?: boolean;
-  openSearchBoxHandler?: () => void;
+  toggleSearchBox?: () => void;
 }
 
 function FMLayout({
@@ -21,7 +21,7 @@ function FMLayout({
   bottomNavigation,
   headerRightIcon,
   headerLeftIcon,
-  openSearchBoxHandler,
+  toggleSearchBox,
 }: IProps): React.ReactElement {
   const theme = useTheme();
   const day = new Date();
@@ -50,7 +50,7 @@ function FMLayout({
         <Header
           headerRightIcon={headerRightIcon}
           headerLeftIcon={headerLeftIcon}
-          openSearchBoxHandler={openSearchBoxHandler}
+          toggleSearchBox={toggleSearchBox}
         />
       )}
       <RealTimeContainer>
