@@ -24,11 +24,11 @@ function FMLayout({
   toggleSearchBox,
 }: IProps): React.ReactElement {
   const theme = useTheme();
-  const day = new Date();
+  const currentTime = new Date();
 
   const today = `${
-    MONTH_CONFIG[day.getMonth() + 1]
-  } ${day.getDate()}, ${day.getFullYear()}`;
+    MONTH_CONFIG[currentTime.getMonth() + 1]
+  } ${currentTime.getDate()}, ${currentTime.getFullYear()}`;
 
   React.useEffect(() => {
     function resizeHeightForIOS() {
@@ -43,6 +43,20 @@ function FMLayout({
       window.addEventListener("resize", resizeHeightForIOS);
     };
   }, []);
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem("taskList");
+  };
+
+  const checkMidnightAndClear = () => {
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+    if (currentTime.getTime() >= midnight.getTime()) {
+      clearLocalStorage();
+    }
+  };
+
+  setInterval(checkMidnightAndClear, 1000 * 60 * 60 * 24); // Run every 24 hours
 
   return (
     <Container>
