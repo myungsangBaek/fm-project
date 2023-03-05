@@ -10,6 +10,7 @@ export interface IProps {
   limitRow?: number;
   value: string;
   onChangeValue: (value: string) => void;
+  onKeyPress?: (e: any) => void;
 }
 
 function WriteFeedInputCard({
@@ -19,6 +20,7 @@ function WriteFeedInputCard({
   value,
   limitRow,
   onChangeValue,
+  onKeyPress,
 }: IProps) {
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const baseRowHeight = placeholder.split(`\n`).length * 1.5 + 2;
@@ -45,6 +47,7 @@ function WriteFeedInputCard({
         onChange={onChange}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
+        onKeyPress={onKeyPress}
         maxLength={limitLength}
         height={`${inputBarHeight}rem`}
       />

@@ -8,15 +8,25 @@ import WriteFeedInputCard from "@/components/card/WriteInputCard";
 import { useRouter } from "next/router";
 import { taskState } from "@/config/store";
 import { useRecoilState } from "recoil";
-import { ITodo } from "@/types";
+import { IChip, ITodo } from "@/types";
 
 function NewTodoPage(): React.ReactElement {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [chip, setChip] = useState<string>("");
+  const [chipList, setChipList] = useState<IChip[]>([]);
   const [taskList, setTaskList] = useRecoilState(taskState);
 
   const theme = useTheme();
+
+  const onGenerateChipHandler = (e: any) => {
+    console.log(e.key);
+    if (e.key === "Enter" || " ") {
+      setChipList([...chipList, { id: chipList.length, title: chip }]);
+      setChip("");
+    }
+  };
 
   const inputCardList = [
     {
@@ -29,10 +39,20 @@ function NewTodoPage(): React.ReactElement {
     },
     {
       label: "Content*",
-      placeholder: "내용을 작성해주세요.(최대 20글자)",
+      placeholder: "내용을 작성해주세요.(최대 100글자)",
+      limitLength: 100,
+      limitRow: 1,
       value: content,
-      limitLength: 20,
       onChangeValue: (value: string) => setContent(value),
+    },
+    {
+      label: "Hash Tag*",
+      placeholder: "해시태그를 작성해주세요.(최대 10글자)",
+      limitLength: 4,
+      limitRow: 1,
+      value: chip,
+      onChangeValue: (value: string) => setChip(value),
+      onKeyPress: (e: any) => onGenerateChipHandler(e),
     },
   ];
 
@@ -87,9 +107,15 @@ function NewTodoPage(): React.ReactElement {
                 value={item.value}
                 limitRow={item.limitRow}
                 onChangeValue={item.onChangeValue}
+                onKeyPress={item.onKeyPress}
               />
             );
           })}
+          <ChipContainer>
+            {chipList.map((item, i) => (
+              <Chip />
+            ))}
+          </ChipContainer>
         </Container>
       </FMLayout>
       <SubmitButton onClick={onSubmitHandler}>
@@ -124,6 +150,12 @@ const SubmitButton = styled.button`
   border: none;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.colors.main};
+`;
+
+const ChipContainer = styled.div`
+  display: flex;
+  height: 20xp;
+  border: 1px solid black;
 `;
 
 export default React.memo(NewTodoPage);
