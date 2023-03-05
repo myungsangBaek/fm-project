@@ -84,7 +84,7 @@ export default function Home() {
   return (
     <React.Fragment>
       <Head>
-        <title>{"Add Task"}</title>
+        <title>{"Main Task"}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1"

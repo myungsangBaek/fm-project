@@ -31,7 +31,7 @@ function NewTodoPage(): React.ReactElement {
   ) => {
     if (e.key === "Enter") {
       if (chipList.length >= 3) {
-        alert("Hash Tag는 최대 3개까지 등록 가능합니다.");
+        alert("Hashtags can be registered up to three at most.");
       } else {
         setChipList([...chipList, { id: chipList.length + 1, title: chip }]);
       }
@@ -43,7 +43,7 @@ function NewTodoPage(): React.ReactElement {
   const inputCardList = [
     {
       label: "Title *",
-      placeholder: "제목을 작성해주세요.(최대 10글자)",
+      placeholder: "Please write a title (maximum 10 characters)",
       limitLength: 10,
       limitRow: 1,
       value: title,
@@ -51,7 +51,7 @@ function NewTodoPage(): React.ReactElement {
     },
     {
       label: "Content *",
-      placeholder: "내용을 작성해주세요.(최대 100글자)",
+      placeholder: "Please write a content (maximum 100 characters)",
       limitLength: 100,
       limitRow: 1,
       value: content,
@@ -59,7 +59,8 @@ function NewTodoPage(): React.ReactElement {
     },
     {
       label: "Hash Tag",
-      placeholder: "해시태그를 작성 후 Enter키를 눌러주세요.(최대 8글자)",
+      placeholder:
+        "Please write a hashtag and press Enter key. (maximum 8 characters)",
       limitLength: 8,
       limitRow: 1,
       value: chip,
@@ -86,9 +87,9 @@ function NewTodoPage(): React.ReactElement {
 
   const onSubmitHandler = () => {
     if (!title) {
-      alert("제목을 입력해주세요.");
+      alert("Please enter a title.");
     } else if (!content) {
-      alert("내용을 입력해주세요.");
+      alert("Please enter a content.");
     } else {
       addTask();
     }
@@ -137,7 +138,7 @@ function NewTodoPage(): React.ReactElement {
         </Container>
       </FMLayout>
       <SubmitButton onClick={onSubmitHandler}>
-        <FMText color={theme.colors.white}>{"작성하기"}</FMText>
+        <FMText color={theme.colors.white}>{"Submit"}</FMText>
       </SubmitButton>
     </PageContainer>
   );
