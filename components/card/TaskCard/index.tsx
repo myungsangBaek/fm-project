@@ -1,7 +1,7 @@
 import { FMText } from "@/components/base";
 import { Icons } from "@/public/icons";
 import React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 interface IProps {
   id: number;
@@ -10,6 +10,7 @@ interface IProps {
   checked: boolean;
   chip?: string[];
   onDeleteHandler: (id: number) => void;
+  onCheckHandler: (id: number) => void;
 }
 
 function TaskCard({
@@ -19,11 +20,13 @@ function TaskCard({
   checked,
   chip,
   onDeleteHandler,
+  onCheckHandler,
 }: IProps) {
+  const theme = useTheme();
   return (
     <Container>
       <ContentContainer>
-        <CheckContainer>
+        <CheckContainer onClick={() => onCheckHandler(id)}>
           {checked ? (
             <Icons.SvgElement.checkIcon />
           ) : (
@@ -31,8 +34,18 @@ function TaskCard({
           )}
         </CheckContainer>
         <TextContainer>
-          <FMText body01>{title}</FMText>
-          <FMText body04>{content}</FMText>
+          <FMText
+            body01
+            color={checked ? theme.colors.gray10 : theme.colors.black}
+          >
+            {title}
+          </FMText>
+          <FMText
+            body04
+            color={checked ? theme.colors.gray10 : theme.colors.gray40}
+          >
+            {content}
+          </FMText>
         </TextContainer>
         <IconContainer onClick={() => onDeleteHandler(id)}>
           <Icons.SvgElement.closeIcon />

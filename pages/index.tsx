@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useRecoilState } from "recoil";
+
 import FMLayout from "@/components/base/FMLayout";
 import NoTaskCard from "@/components/card/NoTaskCard";
 import TaskCard from "@/components/card/TaskCard";
 
-import styled from "styled-components";
-
-import { useRecoilState } from "recoil";
 import { taskState } from "@/config/store";
+import { ITodo } from "@/types";
 
 const TodoListContainer = styled.div`
   display: flex;
@@ -18,8 +19,21 @@ export default function Home() {
   const [taskList, setTaskList] = useRecoilState(taskState);
 
   const onDeleteHandler = (id: number) => {
-    console.log(id);
     setTaskList(taskList.filter((item) => item.id !== id));
+  };
+
+  const onCheckHandler = (id: number) => {
+    const newTaskList = taskList.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          checked: !item.checked,
+        };
+      } else {
+        return item;
+      }
+    });
+    setTaskList(newTaskList);
   };
 
   useEffect(() => {
@@ -28,7 +42,6 @@ export default function Home() {
       setTaskList(JSON.parse(savedTaskList));
     }
   }, []);
-  console.log(taskList);
 
   useEffect(() => {
     localStorage.setItem("taskList", JSON.stringify(taskList));
@@ -37,7 +50,7 @@ export default function Home() {
   const renderTodoList = () => {
     return taskList.length > 0 ? (
       <TodoListContainer>
-        {taskList.map((item: any) => (
+        {taskList.map((item: ITodo) => (
           <TaskCard
             id={item.id}
             key={item.id}
@@ -45,6 +58,7 @@ export default function Home() {
             content={item.content}
             checked={item.checked}
             onDeleteHandler={onDeleteHandler}
+            onCheckHandler={onCheckHandler}
           />
         ))}
       </TodoListContainer>

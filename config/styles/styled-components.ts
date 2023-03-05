@@ -6,9 +6,11 @@ declare module "styled-components" {
       gray10: string;
       gray20: string;
       gray30: string;
+      gray40: string;
 
       main: string;
 
+      black: string;
       white: string;
     };
   }
