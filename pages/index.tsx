@@ -1,21 +1,20 @@
 import * as React from "react";
 import styled, { useTheme } from "styled-components";
 import { useRecoilState } from "recoil";
+import Head from "next/head";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import { FMLayout, FMSearch, FMText } from "@/components/base";
 import NoTaskCard from "@/components/card/NoTaskCard";
 import TaskCard from "@/components/card/TaskCard";
 import { taskState } from "@/config/store";
 import { ITodo } from "@/types";
-import Head from "next/head";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { Icons } from "@/public/icons";
 
 export default function Home() {
   const [taskList, setTaskList] = useRecoilState(taskState);
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
-  const [alignment, setAlignment] = React.useState("web");
+  const [alignment, setAlignment] = React.useState<string>("All");
 
   const theme = useTheme();
 
@@ -50,6 +49,9 @@ export default function Home() {
     newAlignment: string
   ) => {
     setAlignment(newAlignment);
+    if (!newAlignment) {
+      setAlignment("All");
+    }
   };
 
   React.useEffect(() => {
@@ -66,12 +68,24 @@ export default function Home() {
   }, [taskList]);
 
   const renderTodoList = () => {
-    const data =
-      searchTerm?.length > 0
-        ? taskList.filter((item) =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        : taskList;
+    let data: ITodo[] = [];
+    if (searchTerm?.length > 0) {
+      data = taskList.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      data = taskList;
+    }
+    switch (alignment) {
+      case "Done":
+        data = data.filter((item) => item.checked);
+        break;
+      case "Open":
+        data = data.filter((item) => !item.checked);
+        break;
+      default:
+        break;
+    }
     return data.length > 0 ? (
       <TodoListContainer>
         {data.map((item: ITodo, i: number) => (
@@ -93,7 +107,7 @@ export default function Home() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{"Task List"}</title>
         <meta
@@ -115,15 +129,15 @@ export default function Home() {
             } Task Left`}
           </FMText>
           <ToggleButtonGroup
-            color="primary"
+            color="error"
             value={alignment}
             exclusive
             onChange={handleChange}
             aria-label="Platform"
           >
-            <ToggleButton value="web">All</ToggleButton>
-            <ToggleButton value="android">Y</ToggleButton>
-            <ToggleButton value="ios">N</ToggleButton>
+            <ToggleButton value="All">All</ToggleButton>
+            <ToggleButton value="Done">Done</ToggleButton>
+            <ToggleButton value="Open">Open</ToggleButton>
           </ToggleButtonGroup>
         </CountContainer>
         {isSearchOpen && (
@@ -131,7 +145,7 @@ export default function Home() {
         )}
         {renderTodoList()}
       </FMLayout>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -143,7 +157,6 @@ const TodoListContainer = styled.div`
 
 const CountContainer = styled.div`
   display: flex;
-  border: 1px solid black;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
