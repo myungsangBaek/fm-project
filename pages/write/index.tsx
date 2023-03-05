@@ -22,11 +22,13 @@ function NewTodoPage(): React.ReactElement {
   const theme = useTheme();
 
   //Chip
-  const onDeleteChipHandler = (id: any) => {
+  const onDeleteChipHandler = (id: number) => {
     setChipList(chipList.filter((item) => item.id !== id));
   };
 
-  const onGenerateChipHandler = (e: any) => {
+  const onGenerateChipHandler = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     if (e.key === "Enter") {
       if (chipList.length >= 3) {
         alert("Hash Tag는 최대 3개까지 등록 가능합니다.");
@@ -62,7 +64,8 @@ function NewTodoPage(): React.ReactElement {
       limitRow: 1,
       value: chip,
       onChangeValue: (value: string) => setChip(value),
-      onKeyPress: (e: any) => onGenerateChipHandler(e),
+      onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) =>
+        onGenerateChipHandler(e),
     },
   ];
 

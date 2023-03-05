@@ -10,7 +10,7 @@ export interface IProps {
   limitRow?: number;
   value: string;
   onChangeValue: (value: string) => void;
-  onKeyPress?: (e: any) => void;
+  onKeyPress?: React.KeyboardEventHandler<HTMLTextAreaElement> | undefined;
 }
 
 function WriteFeedInputCard({
