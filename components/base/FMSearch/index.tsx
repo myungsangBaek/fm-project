@@ -31,7 +31,7 @@ function FMSearch({ taskList, setSearchTerm }: IProps) {
         options={taskList.map((option) => option.title)}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} label="Input Title"></TextField>
+          <TextField {...params} label="Please search a title."></TextField>
         )}
       />
     </SearchContainer>
