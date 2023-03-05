@@ -42,10 +42,10 @@ yarn build
 
 ## 🖼 Test Model
 <div>
-<img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222962136-09c05fd1-89fb-4029-8953-80e1ea932dc2.png">
+<img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222966797-bd397b9c-3be6-468b-b51e-3b9974eee4e1.png">
 <img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222962215-4d8cdc39-1ca3-4887-a97d-5240f54d4851.png">
 <img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222962532-4bd9b095-60de-489c-9894-53276cd15f8e.png">
-<img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222962391-8263909a-1687-4d6d-8de9-e02feda43302.png">
+<img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222966854-1b36c6ba-f07f-40c7-9699-ed552058c557.png">
 </div>
 
 
