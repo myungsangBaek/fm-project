@@ -1,5 +1,8 @@
 import { FMText } from "@/components/base";
+import FMChip from "@/components/base/FMChip";
 import { Icons } from "@/public/icons";
+import { IChip } from "@/types";
+import { Chip, Stack } from "@mui/material";
 import React from "react";
 import styled, { useTheme } from "styled-components";
 
@@ -8,7 +11,7 @@ interface IProps {
   title: string;
   content: string;
   checked: boolean;
-  chip?: string[];
+  chipList?: IChip[];
   onDeleteHandler: (id: number) => void;
   onCheckHandler: (id: number) => void;
 }
@@ -18,7 +21,7 @@ function TaskCard({
   title,
   content,
   checked,
-  chip,
+  chipList,
   onDeleteHandler,
   onCheckHandler,
 }: IProps) {
@@ -51,7 +54,13 @@ function TaskCard({
           <Icons.SvgElement.closeIcon />
         </IconContainer>
       </ContentContainer>
-      <ChipContainer></ChipContainer>
+      <ChipContainer>
+        <Stack direction="row" spacing={1}>
+          {chipList?.map((item) => (
+            <FMChip key={item.id} title={item.title} checked={checked} />
+          ))}
+        </Stack>
+      </ChipContainer>
     </Container>
   );
 }
@@ -94,8 +103,12 @@ const IconContainer = styled.div`
   cursor: pointer;
 `;
 const ChipContainer = styled.div`
+  display: flex;
+  flex-direction: row;
   border-top: 1px solid ${(props) => props.theme.colors.gray10};
-  height: 36px;
+  padding: 6px 20px;
+  box-sizing: border-box;
+  min-height: 36px;
 `;
 
 export default React.memo(TaskCard);

@@ -8,4 +8,5 @@ export interface ITodo {
   title: string;
   content: string;
   checked: boolean;
+  chipList?: IChip[];
 }

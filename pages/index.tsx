@@ -57,6 +57,7 @@ export default function Home() {
             title={item.title}
             content={item.content}
             checked={item.checked}
+            chipList={item.chipList}
             onDeleteHandler={onDeleteHandler}
             onCheckHandler={onCheckHandler}
           />

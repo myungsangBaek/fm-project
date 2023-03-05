@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { taskState } from "@/config/store";
 import { useRecoilState } from "recoil";
 import { IChip, ITodo } from "@/types";
+import { Chip, Stack } from "@mui/material";
 
 function NewTodoPage(): React.ReactElement {
   const router = useRouter();
@@ -20,17 +21,26 @@ function NewTodoPage(): React.ReactElement {
 
   const theme = useTheme();
 
+  //Chip
+  const onDeleteChipHandler = (id: any) => {
+    setChipList(chipList.filter((item) => item.id !== id));
+  };
+
   const onGenerateChipHandler = (e: any) => {
-    console.log(e.key);
-    if (e.key === "Enter" || " ") {
-      setChipList([...chipList, { id: chipList.length, title: chip }]);
+    if (e.key === "Enter") {
+      if (chipList.length >= 3) {
+        alert("Hash Tag는 최대 3개까지 등록 가능합니다.");
+      } else {
+        setChipList([...chipList, { id: chipList.length + 1, title: chip }]);
+      }
       setChip("");
     }
   };
 
+  //Input 관련
   const inputCardList = [
     {
-      label: "Title*",
+      label: "Title *",
       placeholder: "제목을 작성해주세요.(최대 10글자)",
       limitLength: 10,
       limitRow: 1,
@@ -38,7 +48,7 @@ function NewTodoPage(): React.ReactElement {
       onChangeValue: (value: string) => setTitle(value),
     },
     {
-      label: "Content*",
+      label: "Content *",
       placeholder: "내용을 작성해주세요.(최대 100글자)",
       limitLength: 100,
       limitRow: 1,
@@ -46,9 +56,9 @@ function NewTodoPage(): React.ReactElement {
       onChangeValue: (value: string) => setContent(value),
     },
     {
-      label: "Hash Tag*",
-      placeholder: "해시태그를 작성해주세요.(최대 10글자)",
-      limitLength: 4,
+      label: "Hash Tag",
+      placeholder: "해시태그를 작성 후 Enter키를 눌러주세요.(최대 8글자)",
+      limitLength: 8,
       limitRow: 1,
       value: chip,
       onChangeValue: (value: string) => setChip(value),
@@ -56,12 +66,14 @@ function NewTodoPage(): React.ReactElement {
     },
   ];
 
+  //localStorage 저장
   const addTask = () => {
     const newTask: ITodo = {
       id: Date.now(),
       title: title,
       content: content,
       checked: false,
+      chipList: chipList,
     };
     setTaskList([...taskList, newTask]);
     setTitle("");
@@ -79,13 +91,7 @@ function NewTodoPage(): React.ReactElement {
     }
   };
 
-  useEffect(() => {
-    const savedTaskList = localStorage.getItem("taskList");
-    if (savedTaskList) {
-      setTaskList(JSON.parse(savedTaskList));
-    }
-  }, []);
-
+  //taskList 값 변경 시 localStorage 값 변경
   useEffect(() => {
     localStorage.setItem("taskList", JSON.stringify(taskList));
   }, [taskList]);
@@ -111,11 +117,16 @@ function NewTodoPage(): React.ReactElement {
               />
             );
           })}
-          <ChipContainer>
+          <Stack direction="row" spacing={1}>
             {chipList.map((item, i) => (
-              <Chip />
+              <Chip
+                key={item.id}
+                label={item.title}
+                variant={"outlined"}
+                onDelete={() => onDeleteChipHandler(item.id)}
+              />
             ))}
-          </ChipContainer>
+          </Stack>
         </Container>
       </FMLayout>
       <SubmitButton onClick={onSubmitHandler}>
