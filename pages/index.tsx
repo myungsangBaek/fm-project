@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
@@ -8,15 +8,27 @@ import TaskCard from "@/components/card/TaskCard";
 
 import { taskState } from "@/config/store";
 import { ITodo } from "@/types";
+import { Autocomplete, TextField } from "@mui/material";
 
-const TodoListContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  focused: {
+    color: "purple",
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#E10078",
+    },
+    "&.Mui-focused .MuiInputLabel-outlined": {
+      color: "#E10078",
+    },
+  },
+});
 
 export default function Home() {
   const [taskList, setTaskList] = useRecoilState(taskState);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const [isSearch, setIsSearch] = useState<boolean>(false);
 
   const onDeleteHandler = (id: number) => {
     setTaskList(taskList.filter((item) => item.id !== id));
@@ -36,6 +48,12 @@ export default function Home() {
     setTaskList(newTaskList);
   };
 
+  const openSearchBoxHandler = () => {
+    setIsSearch(!isSearch);
+
+    setSearchTerm("");
+  };
+
   useEffect(() => {
     const savedTaskList = localStorage.getItem("taskList");
     if (savedTaskList) {
@@ -48,9 +66,15 @@ export default function Home() {
   }, [taskList]);
 
   const renderTodoList = () => {
-    return taskList.length > 0 ? (
+    const data =
+      searchTerm?.length > 0
+        ? taskList.filter((item) =>
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : taskList;
+    return data.length > 0 ? (
       <TodoListContainer>
-        {taskList.map((item: ITodo) => (
+        {data.map((item: ITodo) => (
           <TaskCard
             id={item.id}
             key={item.id}
@@ -68,9 +92,42 @@ export default function Home() {
     );
   };
 
+  const classes = useStyles();
+
   return (
-    <FMLayout header bottomNavigation headerRightIcon>
-      {renderTodoList()}
-    </FMLayout>
+    <React.Fragment>
+      <FMLayout
+        header
+        bottomNavigation
+        headerRightIcon
+        openSearchBoxHandler={openSearchBoxHandler}
+      >
+        {isSearch && (
+          <SearchContainer>
+            <Autocomplete
+              onChange={(_, value) => setSearchTerm(value || "")}
+              options={taskList.map((option) => option.title)}
+              freeSolo
+              renderInput={(params) => (
+                <TextField {...params} label="Input Title"></TextField>
+              )}
+              classes={classes}
+            />
+          </SearchContainer>
+        )}
+        {renderTodoList()}
+      </FMLayout>
+    </React.Fragment>
   );
 }
+
+const TodoListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const SearchContainer = styled.div`
+  margin: 20px 0;
+  padding: 0 20px;
+`;

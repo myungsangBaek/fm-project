@@ -15,7 +15,7 @@
 ## Production Link
 
 Deployed it on `Vercel`<br/>
-[FM-TODO](https://fm-project-git-develop-myungsangbaek.vercel.app/)
+[FM-TODO](https://fm-project.vercel.app/)
 
 ## Getting Started
 
@@ -32,8 +32,10 @@ yarn build
 
 ## Version
 
-| Name     | Version |
-| -------- | ------- |
-| Node     | v18.5.0 |
-| Next.js  | v13.2.3 |
-| React.js | v18.2.0 |
+| Name          | Version  |
+| ------------- | -------- |
+| Node          | v18.5.0  |
+| Next.js       | v13.2.3  |
+| React.js      | v18.2.0  |
+| Recoil        | v0.7.7   |
+| @mui/material | v5.11.11 |
