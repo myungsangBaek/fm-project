@@ -14,10 +14,14 @@
 | ---- | --------------------- |
 | Han  | hanbaek1643@gmail.com |
 
-## 🔗 Production Link
+## 🔗 Link
 
+### Production 
 Deployed it on `Vercel`<br/>
 [FM-TODO](https://fm-project.vercel.app/)
+
+### UX/UI
+[Figma](https://www.figma.com/file/o48AdQtgi5UGvFuilW46mp/Favorite-Medium?node-id=0%3A1&t=p5ztXGO28Vj5XNbk-1)
 
 ## 🚀 Getting Started
 
@@ -49,7 +53,6 @@ yarn build
 <img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222962532-4bd9b095-60de-489c-9894-53276cd15f8e.png">
 <img width="242" alt="image" src="https://user-images.githubusercontent.com/78290030/222966854-1b36c6ba-f07f-40c7-9699-ed552058c557.png">
 </div>
-
 
 
 
