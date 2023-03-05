@@ -87,8 +87,8 @@ export default function Home() {
         <title>{"Main Task"}</title>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1"
-        ></meta>
+          content="width=device-width, initial-scale=1.0, user-scalable=no"
+        />
       </Head>
       <FMLayout
         header
