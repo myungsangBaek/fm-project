@@ -6,12 +6,15 @@ import styled, { useTheme } from "styled-components";
 import { FMLayout, FMText } from "@/components/base";
 import WriteFeedInputCard from "@/components/card/WriteInputCard";
 import { useRouter } from "next/router";
+import { taskState } from "@/config/store";
+import { useRecoilState } from "recoil";
+import { ITodo } from "@/types";
 
 function NewTodoPage(): React.ReactElement {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [todoList, setTodoList] = useState<string[]>([]);
+  const [taskList, setTaskList] = useRecoilState(taskState);
 
   const theme = useTheme();
 
@@ -25,7 +28,7 @@ function NewTodoPage(): React.ReactElement {
       onChangeValue: (value: string) => setTitle(value),
     },
     {
-      label: "TODO*",
+      label: "Content*",
       placeholder: "내용을 작성해주세요.(최대 20글자)",
       value: content,
       limitLength: 20,
@@ -33,14 +36,14 @@ function NewTodoPage(): React.ReactElement {
     },
   ];
 
-  const addTodo = () => {
-    localStorage.setItem(
-      "todoList",
-      JSON.stringify([
-        ...todoList,
-        { id: Date.now(), title: title, content: content },
-      ])
-    );
+  const addTask = () => {
+    const newTask: ITodo = {
+      id: Date.now(),
+      title: title,
+      content: content,
+      checked: false,
+    };
+    setTaskList([...taskList, newTask]);
     setTitle("");
     setContent("");
     router.push("/");
@@ -52,21 +55,25 @@ function NewTodoPage(): React.ReactElement {
     } else if (!content) {
       alert("내용을 입력해주세요.");
     } else {
-      addTodo();
+      addTask();
     }
   };
 
   useEffect(() => {
-    const savedTodoList = localStorage.getItem("todoList");
-    if (savedTodoList) {
-      setTodoList(JSON.parse(savedTodoList));
+    const savedTaskList = localStorage.getItem("taskList");
+    if (savedTaskList) {
+      setTaskList(JSON.parse(savedTaskList));
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+  }, [taskList]);
 
   return (
     <PageContainer>
       <Head>
-        <title>{"Add TODO"}</title>
+        <title>{"Add Task"}</title>
       </Head>
       <FMLayout header headerLeftIcon>
         <Container>

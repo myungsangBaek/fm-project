@@ -26,7 +26,7 @@ function FMLayout({
 
   const today = `${
     MONTH_CONFIG[day.getMonth() + 1]
-  } ${day.getDay()}, ${day.getFullYear()}`;
+  } ${day.getDate()}, ${day.getFullYear()}`;
 
   React.useEffect(() => {
     function resizeHeightForIOS() {

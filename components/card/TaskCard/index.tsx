@@ -4,25 +4,37 @@ import React from "react";
 import styled from "styled-components";
 
 interface IProps {
+  id: number;
   title: string;
   content: string;
-  chip: string[];
+  checked: boolean;
+  chip?: string[];
+  onDeleteHandler: (id: number) => void;
 }
 
-function TaskCard() {
+function TaskCard({
+  id,
+  title,
+  content,
+  checked,
+  chip,
+  onDeleteHandler,
+}: IProps) {
   return (
     <Container>
       <ContentContainer>
         <CheckContainer>
-          <Icons.SvgElement.circleIcon />
+          {checked ? (
+            <Icons.SvgElement.checkIcon />
+          ) : (
+            <Icons.SvgElement.circleIcon />
+          )}
         </CheckContainer>
         <TextContainer>
-          <FMText body01>{"Favorite Medium Coding"}</FMText>
-          <FMText body04>
-            {"Very Nice Very Nice Very Nice Very Nice Very Nice Very Nice"}
-          </FMText>
+          <FMText body01>{title}</FMText>
+          <FMText body04>{content}</FMText>
         </TextContainer>
-        <IconContainer>
+        <IconContainer onClick={() => onDeleteHandler(id)}>
           <Icons.SvgElement.closeIcon />
         </IconContainer>
       </ContentContainer>
