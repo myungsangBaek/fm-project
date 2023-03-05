@@ -151,13 +151,14 @@ export default function Home() {
 
 const TodoListContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
 const CountContainer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: space-between;
+  padding: 10px 20px;
 `;
