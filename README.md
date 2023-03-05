@@ -4,6 +4,8 @@
 
 🔥 It allows you to write detailed content, categorize tasks, and has a search function.
 
+🔎 This app provides powerful search and sorting capabilities!
+
 ✨ Try managing your schedule in a cool way.
 
 ## ⚒ Maintainer
