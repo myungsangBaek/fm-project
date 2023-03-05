@@ -1,10 +1,10 @@
-import { FMText } from "@/components/base";
-import FMChip from "@/components/base/FMChip";
+import * as React from "react";
+import styled, { useTheme } from "styled-components";
+import { Stack } from "@mui/material";
+
+import { FMText, FMChip } from "@/components/base";
 import { Icons } from "@/public/icons";
 import { IChip } from "@/types";
-import { Chip, Stack } from "@mui/material";
-import React from "react";
-import styled, { useTheme } from "styled-components";
 
 interface IProps {
   id: number;

@@ -1,8 +1,9 @@
-import { ITodo } from "@/types";
+import * as React from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
 import styled from "styled-components";
+
+import { ITodo } from "@/types";
 
 const useStyles = makeStyles({
   focused: {

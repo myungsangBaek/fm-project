@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 
 import styled, { useTheme } from "styled-components";
+import { Chip, Stack } from "@mui/material";
 
 import { FMLayout, FMText } from "@/components/base";
 import WriteFeedInputCard from "@/components/card/WriteInputCard";
-import { useRouter } from "next/router";
 import { taskState } from "@/config/store";
-import { useRecoilState } from "recoil";
 import { IChip, ITodo } from "@/types";
-import { Chip, Stack } from "@mui/material";
 
 function NewTodoPage(): React.ReactElement {
   const router = useRouter();
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [chip, setChip] = useState<string>("");
-  const [chipList, setChipList] = useState<IChip[]>([]);
+  const [title, setTitle] = React.useState<string>("");
+  const [content, setContent] = React.useState<string>("");
+  const [chip, setChip] = React.useState<string>("");
+  const [chipList, setChipList] = React.useState<IChip[]>([]);
   const [taskList, setTaskList] = useRecoilState(taskState);
 
   const theme = useTheme();
@@ -95,7 +95,7 @@ function NewTodoPage(): React.ReactElement {
   };
 
   //taskList 값 변경 시 localStorage 값 변경
-  useEffect(() => {
+  React.useEffect(() => {
     localStorage.setItem("taskList", JSON.stringify(taskList));
   }, [taskList]);
 
@@ -103,6 +103,10 @@ function NewTodoPage(): React.ReactElement {
     <PageContainer>
       <Head>
         <title>{"Add Task"}</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        ></meta>
       </Head>
       <FMLayout header headerLeftIcon>
         <Container>

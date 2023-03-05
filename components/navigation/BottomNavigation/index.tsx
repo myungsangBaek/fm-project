@@ -1,9 +1,8 @@
-import React from "react";
-
+import * as React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import { Icons } from "@/public/icons";
-import { useRouter } from "next/router";
 
 function BottomNavigation() {
   const router = useRouter();

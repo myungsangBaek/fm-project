@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
-import FMLayout from "@/components/base/FMLayout";
+import { FMLayout, FMSearch } from "@/components/base";
 import NoTaskCard from "@/components/card/NoTaskCard";
 import TaskCard from "@/components/card/TaskCard";
-
 import { taskState } from "@/config/store";
 import { ITodo } from "@/types";
-
-import FMSearch from "@/components/base/FMSearch";
+import Head from "next/head";
 
 export default function Home() {
   const [taskList, setTaskList] = useRecoilState(taskState);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
 
   const handleDelete = (id: number) => {
     setTaskList(taskList.filter((item) => item.id !== id));
@@ -43,14 +41,14 @@ export default function Home() {
     setSearchTerm("");
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const savedTaskList = localStorage.getItem("taskList");
     if (savedTaskList) {
       setTaskList(JSON.parse(savedTaskList));
     }
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (taskList.length > 0) {
       localStorage.setItem("taskList", JSON.stringify(taskList));
     }
@@ -85,6 +83,13 @@ export default function Home() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>{"Add Task"}</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        ></meta>
+      </Head>
       <FMLayout
         header
         bottomNavigation

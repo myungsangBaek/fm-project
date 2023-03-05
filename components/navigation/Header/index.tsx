@@ -1,8 +1,9 @@
-import React from "react";
+import * as React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+
 import { Icons } from "@/public/icons";
 import { FMText } from "@/components/base";
-import { useRouter } from "next/router";
 
 export interface IProps {
   headerLeftIcon?: boolean;

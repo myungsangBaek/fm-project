@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import * as React from "react";
 import styled from "styled-components";
 
 import { FMText } from "@/components/base";
@@ -22,18 +22,21 @@ function WriteFeedInputCard({
   onChangeValue,
   onKeyPress,
 }: IProps) {
-  const [isFocus, setIsFocus] = useState<boolean>(false);
+  const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const baseRowHeight = placeholder.split(`\n`).length * 1.5 + 2;
   const valueRowHeight = value.split(`\n`).length * 1.5 + 2;
 
   const inputBarHeight =
     valueRowHeight > baseRowHeight ? valueRowHeight : baseRowHeight;
 
-  const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (limitRow && e.target.value.split(`\n`).length > limitRow)
-      onChangeValue(e.target.value.slice(0, -1));
-    else onChangeValue(e.target.value);
-  }, []);
+  const onChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (limitRow && e.target.value.split(`\n`).length > limitRow)
+        onChangeValue(e.target.value.slice(0, -1));
+      else onChangeValue(e.target.value);
+    },
+    []
+  );
 
   return (
     <Container>

@@ -1,7 +1,8 @@
+import * as React from "react";
+import styled, { useTheme } from "styled-components";
+
 import { FMText } from "@/components/base";
 import { Icons } from "@/public/icons";
-import React from "react";
-import styled, { useTheme } from "styled-components";
 
 function NoTaskCard() {
   const theme = useTheme();
